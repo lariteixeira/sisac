@@ -5,12 +5,12 @@ class ApplicationController < ActionController::Base
 
   private
 
-    def current_perfil
-      @current_perfil ||= Perfil.find(session[:perfil_id]) if session[:perfil_id]
+    def current_usuario
+      @current_usuario ||= Usuario.find(session[:usuario_id]) if session[:usuario_id]
     end
-    helper_method :current_perfil
+    helper_method :current_usuario
 
     def authorize
-      redirect_to 'login_path' unless current_perfil
+      redirect_to 'login_path' unless current_usuario
     end
 end

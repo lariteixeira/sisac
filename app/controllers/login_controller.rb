@@ -4,11 +4,11 @@ class LoginController < ApplicationController
     end
 
     def create
-        perfil = Perfil.find_by_matricula(params[:perfil][:matricula])
+        usuario = Usuario.find_by_matricula(params[:usuario][:matricula])
         
-        if perfil 
-            # && Perfil.validates_confirmation_of(params[:perfil][:password])
-            session[:perfil_id] = perfil.id
+        if usuario 
+            # && Usuario.validates_confirmation_of(params[:usuario][:password])
+            session[:usuario_id] = usuario.id
             redirect_to root_path
         else
             flash.now[:alert] = "Matricula ou senha inválido."
@@ -17,7 +17,7 @@ class LoginController < ApplicationController
     end
 
     def destroy
-        session[:perfil_id] = nil
+        session[:usuario_id] = nil
         redirect_to login_path
     end
 

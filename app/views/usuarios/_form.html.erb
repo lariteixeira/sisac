@@ -1,10 +1,10 @@
-<%= form_for(@perfil, html: { class: 'form-horizontal' }) do |f| %>
-    <% if @perfil.errors.any? %>
+<%= form_for(@usuario, html: { class: 'form-horizontal' }) do |f| %>
+    <% if @usuario.errors.any? %>
         <div class="alert alert-error">
-            <h3><%= pluralize(@perfil.errors.count, "error") %> prohibited this perfil from being saved:</h3>
+            <h3><%= pluralize(@usuario.errors.count, "error") %> prohibited this Usuario from being saved:</h3>
 
             <ul>
-                <% @perfil.errors.full_messages.each do |msg| %>
+                <% @usuario.errors.full_messages.each do |msg| %>
                      <li><%= msg %></li>
                 <% end %>
             </ul>
@@ -48,7 +48,7 @@
 
     <div class="control-group controls btn-group">
         <%= f.submit "Criar", class: 'btn btn-primary' %>
-        <% if current_perfil %>
+        <% if current_usuario %>
         <%= link_to 'Voltar', root_path, class: 'btn btn-default' %>
         <% else %>
             <%= link_to 'Voltar', login_path, class: 'btn btn-default' %>

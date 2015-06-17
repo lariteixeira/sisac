@@ -17,9 +17,9 @@
         <ul id="app-menu" class="nav navbar-nav navbar-right">
           <li><%= link_to "Home", root_path %></li>
           
-          <% if current_perfil %>
+          <% if current_usuario %>
             <li><%= link_to "Nova Atividade", new_atividade_path %></li>
-            <li><a>Usuario: <%= current_perfil.nome.capitalize %></a></li>
+            <li><a>Usuario: <%= current_usuario.nome.capitalize %></a></li>
             <li><%= link_to "Logout", logout_path %></li>
           <% else %>
             <li><%= link_to "Atividades", atividades_path %></li>
