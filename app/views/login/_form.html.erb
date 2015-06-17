@@ -1,4 +1,4 @@
-<%= form_for(Perfil.new, url: login_path, html: {class: 'form-signin'}) do |f| %>
+<%= form_for(Usuario.new, url: login_path, html: {class: 'form-signin'}) do |f| %>
 
     <h2>Login</h2>
  
@@ -19,7 +19,7 @@
     <div class="control-group">
         <div class="btn-group" role="group">
             <%= f.submit "Login", class: 'btn btn-primary' %>
-            <%= link_to 'Sing up', new_perfil_path, class: 'btn btn-default' %>
+            <%= link_to 'Sing up', new_usuario_path, class: 'btn btn-default' %>
         </div>        
     </div>
  

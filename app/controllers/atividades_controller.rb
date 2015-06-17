@@ -1,5 +1,5 @@
 class AtividadesController < ApplicationController
-  before_filter :authorize_perfil, only: [:new, :create]
+  before_filter :authorize_usuario, only: [:new, :create]
   before_action :set_atividade, only: [:show, :edit, :update, :destroy]
 
   # GET /atividades
@@ -15,7 +15,7 @@ class AtividadesController < ApplicationController
 
   # GET /atividades/new
   def new
-    @atividade = current_perfil.atividades.build
+    @atividade = current_usuario.atividades.build
   end
 
   # GET /atividades/1/edit
@@ -25,7 +25,7 @@ class AtividadesController < ApplicationController
   # POST /atividades
   # POST /atividades.json
   def create
-    @atividade = current_perfil.atividades.build(atividade_params)
+    @atividade = current_usuario.atividades.build(atividade_params)
 
     respond_to do |format|
       if @atividade.save
@@ -75,8 +75,8 @@ class AtividadesController < ApplicationController
 
 private
 
-  def authorize_perfil
-    unless current_perfil
+  def authorize_usuario
+    unless current_usuario
       redirect_to root_path, alert: "Faça o login para continuar."
     end
   end

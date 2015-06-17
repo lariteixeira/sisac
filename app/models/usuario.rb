@@ -1,5 +1,5 @@
 
-class Perfil < ActiveRecord::Base
+class Usuario < ActiveRecord::Base
 	has_many :atividades
 	# has_secure_password
 

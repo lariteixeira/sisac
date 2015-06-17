@@ -27,11 +27,11 @@
               Nao
             <% end %>
         </td>
-        <td><%= atividade.perfil.nome %></td>
+        <td><%= atividade.usuario.nome %></td>
         <td>
           <div class="btn-group" role="group">
             <%= link_to 'Abrir', atividade_path(atividade.id), class:'btn btn-default' %>
-            <% if current_perfil == atividade.perfil %>
+            <% if current_usuario == atividade.usuario %>
               <%= link_to 'Editar', edit_atividade_path(atividade), class:'btn btn-default' %>
               <%= link_to 'Deletar', atividades_path, method: :delete, data: {confirm: 'Deseja confirmar?'}, class:'btn btn-default' %>
             <%end%>
