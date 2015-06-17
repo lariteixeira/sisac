@@ -1,0 +1,48 @@
+<div class="page-header">
+  <h1>Lista de Atividades</h1>
+</div>
+
+<div class="panel panel-default">
+<table class="table">
+  <thead>
+    <tr>
+      <th>Nome</th>
+      <th>Status</th>
+      <th>Professor</th>
+      <th>Documento</th>
+      <th>Aluno</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @atividades.each do |atividade| %>
+      <tr>
+        <td><%= atividade.nome %></td>
+        <td><%= atividade.status %></td>
+        <td><%= atividade.professor %></td>
+        <td><% if atividade.documento %>
+              Sim
+            <% else %>
+              Nao
+            <% end %>
+        </td>
+        <td><%= atividade.perfil.nome %></td>
+        <td>
+          <div class="btn-group" role="group">
+            <%= link_to 'Abrir', atividade_path(atividade.id), class:'btn btn-default' %>
+            <% if current_perfil == atividade.perfil %>
+              <%= link_to 'Editar', edit_atividade_path(atividade), class:'btn btn-default' %>
+              <%= link_to 'Deletar', atividades_path, method: :delete, data: {confirm: 'Deseja confirmar?'}, class:'btn btn-default' %>
+            <%end%>
+          </div>
+      </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+</div>
+
+<div class="btn-group" role="group">
+<%= link_to 'Nova Atividade', new_atividade_path, class:"btn btn-default" %>
+</div>

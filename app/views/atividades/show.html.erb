@@ -1,0 +1,30 @@
+<div class="page-header">
+<h1>Atividade Complementar - <%= @atividade.nome %></h1>
+</div>
+<p>
+  <strong>Nome:</strong>
+  <%= @atividade.nome %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @atividade.status %>
+</p>
+
+<p>
+  <strong>Professor:</strong>
+  <%= @atividade.professor %>
+</p>
+
+<p>
+  <strong>Documento:</strong>
+  <%= @atividade.documento %>
+</p>
+
+<p>
+  <strong>Aluno:</strong>
+  <%= @atividade.perfil.nome %>
+</p>
+
+<%= link_to 'Editar', edit_atividade_path(@atividade), class:"btn btn-default" %>
+<%= link_to 'Voltar', atividades_path, class:"btn btn-default" %>

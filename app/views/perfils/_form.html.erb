@@ -1,0 +1,58 @@
+<%= form_for(@perfil, html: { class: 'form-horizontal' }) do |f| %>
+    <% if @perfil.errors.any? %>
+        <div class="alert alert-error">
+            <h3><%= pluralize(@perfil.errors.count, "error") %> prohibited this perfil from being saved:</h3>
+
+            <ul>
+                <% @perfil.errors.full_messages.each do |msg| %>
+                     <li><%= msg %></li>
+                <% end %>
+            </ul>
+        </div>
+    <% end %>
+
+    <div class="control-group">
+        <%= f.label :nome, class: 'control-label' %>
+        <div class="controls">
+            <%= f.text_field :nome %>
+        </div>
+    </div>
+
+    <div class="control-group">
+        <%= f.label :matricula, class: 'control-label' %>
+        <div class="controls">
+            <%= f.text_field :matricula %>
+        </div>
+    </div>
+
+    <div class="control-group">
+        <%= f.label :categoria, class: 'control-label' %>
+        <div class="controls">
+            <%= f.text_field :categoria %>
+        </div>
+    </div>
+
+    <div class="control-group">
+        <%= f.label :password, class: 'control-label' %>
+        <div class="controls">
+            <%= f.password_field :password %>
+        </div>
+    </div>
+
+    <div class="control-group">
+        <%= f.label :password_confirmation, class: 'control-label' %>
+        <div class="controls">
+            <%= f.password_field :password_confirmation %>
+        </div>
+    </div>
+
+    <div class="control-group controls btn-group">
+        <%= f.submit "Criar", class: 'btn btn-primary' %>
+        <% if current_perfil %>
+        <%= link_to 'Voltar', root_path, class: 'btn btn-default' %>
+        <% else %>
+            <%= link_to 'Voltar', login_path, class: 'btn btn-default' %>
+        <% end%>
+    </div>
+
+<% end %>

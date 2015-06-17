@@ -1,0 +1,32 @@
+<%= form_for(@atividade) do |f| %>
+  
+  <% if @atividade.errors.any? %>
+    <div class="alert alert-danger" id="error_explanation">
+      <p><%= pluralize(@atividade.errors.count, "erro") %> ao salvar esta Atividade</p>
+
+      <ul>
+      <% @atividade.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :nome %><br>
+    <%= f.text_field :nome %>
+  </div>
+  <div class="field">
+    <%= f.label :status %><br>
+    <%= f.text_field :status %>
+  </div>
+  <div class="field">
+    <%= f.label :professor %><br>
+    <%= f.text_field :professor %>
+  </div>
+  <div class="field">
+    <%= f.label :documento %><br>
+    <%= f.check_box :documento %>
+  </div>
+    <%= f.submit "Criar", class: 'btn btn-primary' %>
+<% end %>

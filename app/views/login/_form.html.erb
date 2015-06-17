@@ -1,0 +1,26 @@
+<%= form_for(Perfil.new, url: login_path, html: {class: 'form-signin'}) do |f| %>
+
+    <h2>Login</h2>
+ 
+    <div class="control-group">
+        <%= f.label :matricula, class: 'control-label' %>
+            <div class="controls">
+                <%= f.text_field :matricula %>
+            </div>
+    </div>
+
+    <div class="control-group">
+        <%= f.label :password, class: 'control-label' %>
+            <div class="controls">
+                <%= f.password_field :password %>
+            </div>
+    </div>
+
+    <div class="control-group">
+        <div class="btn-group" role="group">
+            <%= f.submit "Login", class: 'btn btn-primary' %>
+            <%= link_to 'Sing up', new_perfil_path, class: 'btn btn-default' %>
+        </div>        
+    </div>
+ 
+<% end %>

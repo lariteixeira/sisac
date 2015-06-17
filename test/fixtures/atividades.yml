@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  nome: MyString
+  status: MyString
+  professor: MyString
+  documento: false
+  aluno: MyString
+
+two:
+  nome: MyString
+  status: MyString
+  professor: MyString
+  documento: false
+  aluno: MyString
