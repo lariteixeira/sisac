@@ -12,21 +12,33 @@
     </div>
   <% end %>
 
-  <div class="field">
+  <div class="control-group">
     <%= f.label :nome %><br>
-    <%= f.text_field :nome %>
+    <div class="controls">
+      <%= f.text_field :nome %>
+    </div>
   </div>
-  <div class="field">
+
+  <div class="control-group">
     <%= f.label :status %><br>
-    <%= f.text_field :status %>
+    <div class="controls">
+      <%= f.text_field :status %>
+    </div>
   </div>
-  <div class="field">
+
+  <div class="control-group">
     <%= f.label :professor %><br>
-    <%= f.text_field :professor %>
+    <div class="controls">
+     <%= f.text_field :professor %>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :documento %><br>
-    <%= f.check_box :documento %>
+
+  <div class="control-group">
+    <%= f.label :cv %><br>
+        <div class="controls">
+            <%= f.attachment_field :cv %>
+        </div>
   </div>
+
     <%= f.submit "Criar", class: 'btn btn-primary' %>
 <% end %>
