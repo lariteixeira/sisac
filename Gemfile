@@ -8,6 +8,9 @@ gem 'sqlite3'
 
 gem 'bcrypt', '~> 3.1.10'
 
+gem "refile", require: "refile/rails"
+gem "refile-mini_magick"
+gem "letter_opener", :group =>:development
 # Use SCSS for stylesheets
 gem 'bootstrap-sass', '~> 3.2.0'
 gem 'autoprefixer-rails'

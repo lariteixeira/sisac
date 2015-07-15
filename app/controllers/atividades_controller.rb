@@ -26,7 +26,7 @@ class AtividadesController < ApplicationController
   # POST /atividades.json
   def create
     @atividade = current_usuario.atividades.build(atividade_params)
-
+    comprovante(@atividade)
     respond_to do |format|
       if @atividade.save
         format.html { redirect_to @atividade, notice: 'Atividade foi criada com sucesso.' }
@@ -38,11 +38,15 @@ class AtividadesController < ApplicationController
     end
   end
 
+
+
   # PATCH/PUT /atividades/1
   # PATCH/PUT /atividades/1.json
   def update
     respond_to do |format|
       if @atividade.update(atividade_params)
+        UsuarioMailer.welcome_email(current_usuario).deliver_now
+        comprovante(@atividade)
         format.html { redirect_to @atividade, notice: 'Atividade foi atualizada.' }
         format.json { render :show, status: :ok, location: @atividade }
       else
@@ -73,11 +77,17 @@ class AtividadesController < ApplicationController
       params.require(:atividade).permit(:nome, :status, :professor, :documento, :cv)
     end
 
+    def comprovante(atividade)
+      if atividade.cv
+        atividade.documento = true
+      end
+    end
+
 private
 
   def authorize_usuario
     unless current_usuario
-      redirect_to root_path, alert: "Faça o login para continuar."
+      redirect_to login_path, alert: "Faça o login para continuar."
     end
   end
 
