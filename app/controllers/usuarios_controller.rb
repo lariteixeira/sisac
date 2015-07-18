@@ -8,8 +8,7 @@ class UsuariosController < ApplicationController
 
         respond_to do |format|
           if @usuario.save
-
-            UsuarioMailer.welcome_email(@usuario).deliver_later
+            current_usuario
             format.html { redirect_to atividades_path, notice: 'Usuario foi criado com sucesso.' }
             format.json { render :show, status: :created, location: @usuario }
           else

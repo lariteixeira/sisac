@@ -7,7 +7,6 @@ class LoginController < ApplicationController
         usuario = Usuario.find_by_matricula(params[:usuario][:matricula])
         
         if usuario 
-            # && Usuario.validates_confirmation_of(params[:usuario][:password])
             session[:usuario_id] = usuario.id
             redirect_to root_path
         else

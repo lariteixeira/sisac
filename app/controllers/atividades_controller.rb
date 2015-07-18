@@ -27,6 +27,8 @@ class AtividadesController < ApplicationController
   def create
     @atividade = current_usuario.atividades.build(atividade_params)
     comprovante(@atividade)
+    set_status(@atividade)
+    UsuarioMailer.welcome_email(current_usuario).deliver_now
     respond_to do |format|
       if @atividade.save
         format.html { redirect_to @atividade, notice: 'Atividade foi criada com sucesso.' }
@@ -45,7 +47,6 @@ class AtividadesController < ApplicationController
   def update
     respond_to do |format|
       if @atividade.update(atividade_params)
-        UsuarioMailer.welcome_email(current_usuario).deliver_now
         comprovante(@atividade)
         format.html { redirect_to @atividade, notice: 'Atividade foi atualizada.' }
         format.json { render :show, status: :ok, location: @atividade }
@@ -74,13 +75,19 @@ class AtividadesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def atividade_params
-      params.require(:atividade).permit(:nome, :status, :professor, :documento, :cv)
+      params.require(:atividade).permit(:nome, :status, :documento, :cv)
     end
 
     def comprovante(atividade)
       if atividade.cv
         atividade.documento = true
+      else
+        atividade.documento = false
       end
+    end
+
+    def set_status(atividade)
+      atividade.status = "Em Processamento"
     end
 
 private

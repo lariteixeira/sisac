@@ -11,7 +11,7 @@
       </ul>
     </div>
   <% end %>
-
+<div class="row">
   <div class="control-group">
     <%= f.label :nome %><br>
     <div class="controls">
@@ -20,24 +20,12 @@
   </div>
 
   <div class="control-group">
-    <%= f.label :status %><br>
-    <div class="controls">
-      <%= f.text_field :status %>
-    </div>
-  </div>
-
-  <div class="control-group">
-    <%= f.label :professor %><br>
-    <div class="controls">
-     <%= f.text_field :professor %>
-    </div>
-  </div>
-
-  <div class="control-group">
     <%= f.label :cv %><br>
         <div class="controls">
             <%= f.attachment_field :cv %>
         </div>
+  </div>
+
   </div>
 
   </br>  <%= f.submit "Enviar", class: 'btn btn-primary' %>
