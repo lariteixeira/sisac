@@ -40,6 +40,12 @@ class AtividadesController < ApplicationController
     end
   end
 
+  def aceita
+    @atividade.professor = current_usuario.nome
+    @atividade.status = "Aceita"
+    update
+  end
+
 
 
   # PATCH/PUT /atividades/1
@@ -74,9 +80,7 @@ class AtividadesController < ApplicationController
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
-    def atividade_params
-      params.require(:atividade).permit(:nome, :status, :documento, :cv)
-    end
+   
 
     def comprovante(atividade)
       if atividade.cv
@@ -97,5 +101,9 @@ private
       redirect_to login_path, alert: "Faça o login para continuar."
     end
   end
+
+   def atividade_params
+      params.require(:atividade).permit(:nome, :status, :documento, :cv, :status_int)
+    end
 
 end

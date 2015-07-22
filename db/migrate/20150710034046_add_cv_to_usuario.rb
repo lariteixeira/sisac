@@ -1,5 +1,5 @@
 class AddCvToUsuario < ActiveRecord::Migration
   def change
-    add_column :usuarios, :cv_id, :string
+    add_column :usuarios, :string
   end
 end

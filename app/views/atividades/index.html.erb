@@ -11,6 +11,7 @@
       <th>Professor</th>
       <th>Documento</th>
       <th>Aluno</th>
+      <th>Status_Int</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -28,9 +29,11 @@
             <% end %>
         </td>
         <td><%= atividade.usuario.nome %></td>
+        <td><%= atividade.status_int %></td>
         <td>
           <div class="btn-group" role="group">
             <%= link_to 'Abrir', atividade_path(atividade.id), class:'btn btn-default' %>
+
             <% if current_usuario == atividade.usuario %>
    
               <%= link_to 'Deletar',  atividade_path(atividade.id), method: :delete, data: {confirm: 'Deseja confirmar?'}, class:'btn btn-default' %>
