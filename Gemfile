@@ -2,15 +2,17 @@ source 'https://rubygems.org'
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
+ruby '2.2.2'
+gem 'rails_12factor'
 gem 'rails', '4.2.1'
-gem 'ruby'
+
 # Use sqlite3 as the database for Active Record
 gem 'pg'
 
 
 gem 'bcrypt', '~> 3.1.10'
 
-gem "refile", require: "refile/rails"
+gem 'refile'
 gem "refile-mini_magick"
 gem "letter_opener", :group =>:development
 # Use SCSS for stylesheets
