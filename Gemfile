@@ -1,8 +1,7 @@
 source 'https://rubygems.org'
 
-
-# Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 ruby '2.2.2'
+# Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails_12factor'
 gem 'rails', '4.2.1'
 
@@ -12,8 +11,9 @@ gem 'pg'
 
 gem 'bcrypt', '~> 3.1.10'
 
-gem 'refile'
+gem "refile", require: "refile/rails"
 gem "refile-mini_magick"
+
 gem "letter_opener", :group =>:development
 # Use SCSS for stylesheets
 gem 'bootstrap-sass', '~> 3.2.0'
