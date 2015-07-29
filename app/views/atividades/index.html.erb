@@ -7,33 +7,43 @@
   <thead>
     <tr>
       <th>Nome</th>
-      <th>Status</th>
+      <th>
+        <div class="dropdown">
+          <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            Status
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+            <li><a class="filtro">Tudo</a></li>
+            <li><a class="filtro">Processamento</a></li>
+            <li><a class="filtro">Aceita</a></li>
+            <li><a class="filtro">Comprovada</a></li>
+            <li><a class="filtro">Rejeitada</a></li>
+          </ul>
+        </div>
+      </th>
       <th>Professor</th>
       <th>Documento</th>
       <th>Aluno</th>
-      <th>Status_Int</th>
       <th colspan="3"></th>
     </tr>
   </thead>
 
   <tbody>
     <% @atividades.each do |atividade| %>
-      <tr>
+      <tr class="<%= atividade.status %>">
         <td><%= atividade.nome %></td>
         <td><%= atividade.status %></td>
         <td><%= atividade.professor %></td>
-        <td><% if atividade.documento %>
-              Sim
-            <% else %>
-              Nao
-            <% end %>
+        <td><%= documento(atividade.documento) %>
         </td>
         <td><%= atividade.usuario.nome %></td>
-        <td><%= atividade.status_int %></td>
         <td>
           <div class="btn-group" role="group">
             <%= link_to 'Abrir', atividade_path(atividade.id), class:'btn btn-default' %>
 
+            <%= link_to 'Aceitar', aceita_atividade_path(atividade.id), method: :put, class:'btn btn-default' %>
+            
             <% if current_usuario == atividade.usuario %>
    
               <%= link_to 'Deletar',  atividade_path(atividade.id), method: :delete, data: {confirm: 'Deseja confirmar?'}, class:'btn btn-default' %>
@@ -49,3 +59,15 @@
 <div class="btn-group" role="group">
 <%= link_to 'Nova Atividade', new_atividade_path, class:"btn btn-default" %>
 </div>
+
+<script type="text/javascript">
+  $(".filtro").click(function(){
+      status = $(this).text();
+      if(status == "Tudo"){
+        $('tbody tr').show()
+      }
+      else{
+       $('tbody tr').show().not('.' +  status).hide();
+     }
+  })
+</script>

@@ -1,6 +1,6 @@
 class AtividadesController < ApplicationController
   before_filter :authorize_usuario, only: [:new, :create]
-  before_action :set_atividade, only: [:show, :edit, :update, :destroy]
+  before_action :set_atividade, only: [:show, :edit, :update, :destroy, :aceita]
 
   # GET /atividades
   # GET /atividades.json
@@ -40,14 +40,6 @@ class AtividadesController < ApplicationController
     end
   end
 
-  def aceita
-    @atividade.professor = current_usuario.nome
-    @atividade.status = "Aceita"
-    update
-  end
-
-
-
   # PATCH/PUT /atividades/1
   # PATCH/PUT /atividades/1.json
   def update
@@ -61,6 +53,14 @@ class AtividadesController < ApplicationController
         format.json { render json: @atividade.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  def aceita
+      if @atividade.update_attributes(professor: current_usuario.nome, status: "Aceita")
+        redirect_to @atividade, notice: 'Atividade foi atualizada.'
+      else
+        render json: @atividade.errors, status: :unprocessable_entity
+      end
   end
 
   # DELETE /atividades/1
@@ -80,7 +80,9 @@ class AtividadesController < ApplicationController
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
-   
+    def atividade_params
+      params.require(:atividade).permit(:nome, :status, :documento, :cv)
+    end
 
     def comprovante(atividade)
       if atividade.cv
@@ -101,9 +103,5 @@ private
       redirect_to login_path, alert: "Faça o login para continuar."
     end
   end
-
-   def atividade_params
-      params.require(:atividade).permit(:nome, :status, :documento, :cv, :status_int)
-    end
 
 end

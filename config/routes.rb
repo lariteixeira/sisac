@@ -7,7 +7,12 @@ Rails.application.routes.draw do
   get "/logout", to:"login#destroy"
   resources :usuarios, only: [:new, :create]
 
-  resources :atividades
+  resources :atividades do
+    member do
+      put :aceita
+    end
+  end
+  
   
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
