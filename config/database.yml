@@ -19,7 +19,7 @@
       encoding: unicode
       database: sisac_development
       pool: 5
-      username: larissa
+      username: lariteixeira
       password:
       timeout: 5000
      
@@ -49,6 +49,6 @@
       encoding: unicode
       database: sisac_test
       pool: 5
-      username: larissa
+      username: lariteixeira
       password:
       timeout: 5000

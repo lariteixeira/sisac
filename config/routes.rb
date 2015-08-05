@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  resources :comprovantes, only: [:new, :create]
+
   root to: "atividades#index"
 
   get   "/login", to: "login#new"

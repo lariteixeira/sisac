@@ -1,4 +1,4 @@
-<%= form_for(@atividade) do |f| %>
+<%= form_for (@atividade) , :html => { :multipart => true } do |f| %>
   
   <% if @atividade.errors.any? %>
     <div class="alert alert-danger" id="error_explanation">
@@ -13,25 +13,20 @@
   <% end %>
 <div class="row">
   <div class="control-group">
-    <%= f.label :nome %><br>
+    <%= f.label :nome, class: 'control-label' %><br>
     <div class="controls">
       <%= f.text_field :nome %>
     </div>
   </div>
 
   <div class="control-group">
-    <%= f.label :status_int %><br>
+    <%= f.label :comprovantes, :class => 'control-label' %>
     <div class="controls">
-      <%= f.text_field :status_int %>
+      <%= file_field_tag "arquivos[]", type: :file, multiple: true %>
     </div>
   </div>
 
-  <div class="control-group">
-    <%= f.label :cv %><br>
-        <div class="controls">
-            <%= f.attachment_field :cv %>
-        </div>
-  </div>
+
 
   </div>
 

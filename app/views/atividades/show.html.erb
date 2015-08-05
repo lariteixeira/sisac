@@ -18,7 +18,9 @@
 
 <p>
   <strong>Documento:</strong>
-  <%= @atividade.documento %>
+  <% @atividade.comprovantes.each do |comprovante|%>
+    <a href="<%= comprovante.arquivo.url %>"><%= comprovante.arquivo_file_name %></a> | 
+  <% end %>
 </p>
 
 <p>

@@ -1,9 +1,9 @@
 class UsuarioMailer < ApplicationMailer
-	default from: 'larissateixeira92@gmail.com'
+	default from: 'no_reply@sisac.com.br'
 
-	def welcome_email(usuario)
+	def novo_pedido_email(usuario)
 		@usuario = usuario
 		@url = '/login'
-		mail(to: 'larissateixeira@id.uff.br',subject: 'Bem Vindo a SisAC')
+		mail(to: 'larissateixeira@id.uff.br',subject: 'Pedido de avaliação de Atividade Complementar- SisAC')
 	end
 end

@@ -11,8 +11,7 @@ gem 'pg'
 
 gem 'bcrypt', '~> 3.1.10'
 
-gem "refile", require: "refile/rails"
-gem "refile-mini_magick"
+gem "paperclip", "~> 4.3"
 
 gem "letter_opener", :group =>:development
 # Use SCSS for stylesheets

@@ -1,5 +1,5 @@
 class AtividadesController < ApplicationController
-  before_filter :authorize_usuario, only: [:new, :create]
+  before_filter :authorize_usuario
   before_action :set_atividade, only: [:show, :edit, :update, :destroy, :aceita]
 
   # GET /atividades
@@ -26,11 +26,20 @@ class AtividadesController < ApplicationController
   # POST /atividades.json
   def create
     @atividade = current_usuario.atividades.build(atividade_params)
-    comprovante(@atividade)
+    comprovante_status(@atividade)
     set_status(@atividade)
-    UsuarioMailer.welcome_email(current_usuario).deliver_now
+    
+    UsuarioMailer.novo_pedido_email(current_usuario).deliver_now
+
     respond_to do |format|
       if @atividade.save
+
+        if params[:arquivos]
+           params[:arquivos].each { |arquivo|
+            @atividade.comprovantes.create(arquivo: arquivo)
+           }
+        end
+
         format.html { redirect_to @atividade, notice: 'Atividade foi criada com sucesso.' }
         format.json { render :show, status: :created, location: @atividade }
       else
@@ -45,7 +54,12 @@ class AtividadesController < ApplicationController
   def update
     respond_to do |format|
       if @atividade.update(atividade_params)
-        comprovante(@atividade)
+        if params[:arquivos]
+          params[:arquivos].each { |arquivo|
+            @atividade.comprovantes.create(arquivo: arquivo)
+          }
+        end
+        comprovante_status(@atividade)
         format.html { redirect_to @atividade, notice: 'Atividade foi atualizada.' }
         format.json { render :show, status: :ok, location: @atividade }
       else
@@ -81,14 +95,14 @@ class AtividadesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def atividade_params
-      params.require(:atividade).permit(:nome, :status, :documento, :cv)
+      params.require(:atividade).permit(:nome, :status, :documento)
     end
 
-    def comprovante(atividade)
-      if atividade.cv
-        atividade.documento = true
-      else
+    def comprovante_status(atividade)
+      if atividade.comprovantes.empty?
         atividade.documento = false
+      else
+        atividade.documento = true
       end
     end
 

@@ -9,8 +9,4 @@ class ApplicationController < ActionController::Base
       @current_usuario ||= Usuario.find(session[:usuario_id]) if session[:usuario_id]
     end
     helper_method :current_usuario
-
-    def authorize
-      redirect_to 'login_path' unless current_usuario
-    end
 end
