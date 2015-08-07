@@ -9,7 +9,8 @@ class UsuariosController < ApplicationController
         respond_to do |format|
           if @usuario.save
             current_usuario
-            format.html { redirect_to atividades_path, notice: 'Usuario foi criado com sucesso.' }
+            session[:usuario_id] = @usuario.id
+            format.html { redirect_to root_path, notice: 'Usuario foi criado com sucesso.' }
             format.json { render :show, status: :created, location: @usuario }
           else
             format.html { render :new }

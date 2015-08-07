@@ -12,6 +12,7 @@ gem 'pg'
 gem 'bcrypt', '~> 3.1.10'
 
 gem "paperclip", "~> 4.3"
+gem 'prawn-rails'
 
 gem "letter_opener", :group =>:development
 # Use SCSS for stylesheets
