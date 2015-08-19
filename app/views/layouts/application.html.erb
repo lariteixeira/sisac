@@ -18,11 +18,15 @@
           <li><%= link_to "Home", root_path %></li>
           
           <% if current_usuario %>
-            <li><%= link_to "Nova Atividade", new_atividade_path %></li>
+            <% if current_usuario.categoria == "Aluno" %>
+          
+              <li><%= link_to "Nova Atividade", new_atividade_path %></li>
+              <li><%= link_to "Atividades", atividades_path %></li>
+            <%end%>
             <li><a>Usuario: <%= current_usuario.nome.capitalize %></a></li>
             <li><%= link_to "Logout", logout_path %></li>
           <% else %>
-            <li><%= link_to "Atividades", atividades_path %></li>
+            
             <li><%= link_to "Login", login_path %></li> 
           <% end %>
 

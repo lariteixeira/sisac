@@ -1,0 +1,4 @@
+1;administrador;Nomeia secretária
+2;aluno;Envia documento em pdf, gera relatorio
+3;coordenacao;Nomeia professores
+4;professor;Avalia AC, rejeita ou aprova

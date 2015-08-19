@@ -19,9 +19,9 @@
     </div>
 
     <div class="control-group">
-        <%= f.label :matricula, class: 'control-label' %>
+        <%= f.label "Login IdUFF(CPF)", class: 'control-label' %>
         <div class="controls">
-            <%= f.text_field :matricula %>
+            <%= f.text_field :iduff %>
         </div>
     </div>
 
@@ -33,25 +33,15 @@
     </div>
 
     <div class="control-group">
-        <%= f.label :categoria, class: 'control-label' %>
+        <%= f.label "Perfil", class: 'control-label' %>
         <div class="controls">
-            <%= f.text_field :categoria %>
+            <% Perfil.all.each do |perfil| %>
+                <%= check_box_tag "usuario[perfil_ids]", perfil.id %>
+                <%= perfil.nome %>
+            <% end %>
         </div>
     </div>
-
-    <div class="control-group">
-        <%= f.label "Senha", class: 'control-label' %>
-        <div class="controls">
-            <%= f.password_field :password %>
-        </div>
-    </div>
-
-    <div class="control-group">
-        <%= f.label :password_confirmation, class: 'control-label' %>
-        <div class="controls">
-            <%= f.password_field :password_confirmation %>
-        </div>
-    </div>
+    <br>
 
     <div class="control-group controls btn-group">
         <%= f.submit "Criar", class: 'btn btn-primary' %>

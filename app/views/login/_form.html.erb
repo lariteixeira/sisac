@@ -3,9 +3,9 @@
      <div class="row">
         <div class="container">
             <div class="control-group">
-                <%= f.label :matricula, class: 'control-label' %>
+                <%= f.label "Login IdUFF(CPF)", class: 'control-label' %>
                 <div class="controls">
-                    <%= f.text_field :matricula %>
+                    <%= f.text_field :iduff %>
                 </div>
             </div>
 
@@ -13,15 +13,15 @@
             <div class="control-group">
                 <%= f.label "Senha", class: 'control-label' %>
                 <div class="controls">
-                    <%= f.password_field :password %>
+                    <%= f.password_field :senha %>
                 </div>
             </div>
             <br>
 
             <div class="control-group">
                 <div class="btn-group" role="group">
-                    <%= f.submit "Login", class: 'btn btn-primary' %>
-                    <%= link_to 'Sing up', new_usuario_path, class: 'btn btn-default' %>
+                    <%= f.submit "Acessar", class: 'btn btn-primary' %>
+                    <%= link_to 'Cadastrar', new_usuario_path, class: 'btn btn-default' %>
                 </div>        
             </div>
         </div>

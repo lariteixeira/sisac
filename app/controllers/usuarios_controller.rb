@@ -10,6 +10,7 @@ class UsuariosController < ApplicationController
           if @usuario.save
             current_usuario
             session[:usuario_id] = @usuario.id
+
             format.html { redirect_to root_path, notice: 'Usuario foi criado com sucesso.' }
             format.json { render :show, status: :created, location: @usuario }
           else
@@ -20,7 +21,7 @@ class UsuariosController < ApplicationController
     end
 
     def usuario_params
-      params.require(:usuario).permit(:nome, :categoria, :matricula, :password, :email)
+      params.require(:usuario).permit(:nome, :perfil_ids, :iduff, :email)
     end
 
 end

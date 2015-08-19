@@ -1,13 +1,12 @@
 Rails.application.routes.draw do
 
-  resources :comprovantes, only: [:new, :create]
-
   root to: "atividades#index"
 
   get   "/login", to: "login#new"
   post  "/login", to: "login#create"
   get "/logout", to:"login#destroy"
   resources :usuarios, only: [:new, :create]
+  resources :comprovantes, only: [:new, :create]
 
   resources :atividades do
     member do

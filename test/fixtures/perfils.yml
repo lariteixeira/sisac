@@ -2,10 +2,6 @@
 
 one:
   nome: MyString
-  categoria: MyString
-  matricula: MyString
 
 two:
   nome: MyString
-  categoria: MyString
-  matricula: MyString

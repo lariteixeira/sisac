@@ -3,7 +3,8 @@ class CreateUsuarios < ActiveRecord::Migration
     create_table :usuarios do |t|
       t.string :nome
       t.string :categoria
-      t.string :matricula
+      t.string :iduff
+      t.string :email
 
       t.timestamps null: false
     end

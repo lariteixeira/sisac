@@ -28,5 +28,20 @@
   <%= @atividade.usuario.nome %>
 </p>
 
+<div class="motivo_rejeicao">
+  
+</div>
+
 <%= link_to 'Editar', edit_atividade_path(@atividade), class:"btn btn-default" %>
 <%= link_to 'Voltar', atividades_path, class:"btn btn-default" %>
+<%= link_to 'Confimar', atividades_path, class:"btn btn-default" %>
+<div class="btn btn-default rejeita_ac" >Rejeitar
+</div>
+
+<script>
+  $(".rejeita_ac").click(function(){
+        
+  $( "<strong>Motivo da rejeicão:</strong><p><textarea cols=\"50\" rows=\"10\"></textarea></p>" ).appendTo( ".motivo_rejeicao" );
+  })
+</script>
+

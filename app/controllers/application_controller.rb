@@ -10,23 +10,31 @@ class ApplicationController < ActionController::Base
     end
     helper_method :current_usuario
 
-    def configura_e_produz_relatorio(nome_arquivo, nome_relatorio)
-    respond_to do |format|
-      format.xls
-      format.pdf { render :pdf => "#{nome_arquivo}_#{DateTime.now.in_time_zone.strftime "%d%m%Y%H%M%S"}",
-                          :orientation => "Landscape", #Se portrait o titulo do relatorio nao cabe e quebra.
-                          :footer => {
-                              :right => 'Página [page] de [topage]',
-                              :left => "SisAC - Sistema de Atividade Complementar / UFF",
-                              :spacing => 2,
-                              :save_only => true},
-                          :header => {
-                              :center => "#{nome_relatorio}",
-                              :left => "SisAC - UFF",
-                              :right => l(DateTime.now.in_time_zone),
-                              :spacing => 2,
-                              :font_size => 14
-                          } }
+    
+    def authorize_usuario
+        unless current_usuario
+          redirect_to login_path, alert: "Faça o login para continuar."
+        end
     end
-  end
+
+    
+  #   def configura_e_produz_relatorio(nome_arquivo, nome_relatorio)
+  #   respond_to do |format|
+  #     format.xls
+  #     format.pdf { render :pdf => "#{nome_arquivo}_#{DateTime.now.in_time_zone.strftime "%d%m%Y%H%M%S"}",
+  #                         :orientation => "Landscape", #Se portrait o titulo do relatorio nao cabe e quebra.
+  #                         :footer => {
+  #                             :right => 'Página [page] de [topage]',
+  #                             :left => "SisAC - Sistema de Atividade Complementar / UFF",
+  #                             :spacing => 2,
+  #                             :save_only => true},
+  #                         :header => {
+  #                             :center => "#{nome_relatorio}",
+  #                             :left => "SisAC - UFF",
+  #                             :right => l(DateTime.now.in_time_zone),
+  #                             :spacing => 2,
+  #                             :font_size => 14
+  #                         } }
+  #   end
+  # end
 end

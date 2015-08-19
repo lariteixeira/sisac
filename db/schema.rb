@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150803231856) do
+ActiveRecord::Schema.define(version: 20150818024739) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,7 +20,6 @@ ActiveRecord::Schema.define(version: 20150803231856) do
     t.string   "nome"
     t.string   "status"
     t.string   "professor"
-    t.boolean  "documento"
     t.string   "aluno"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -41,14 +40,25 @@ ActiveRecord::Schema.define(version: 20150803231856) do
 
   add_index "comprovantes", ["atividade_id"], name: "index_comprovantes_on_atividade_id", using: :btree
 
+  create_table "perfis", force: :cascade do |t|
+    t.string   "nome"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "perfis_usuarios", force: :cascade do |t|
+    t.integer "usuario_id"
+    t.integer "perfil_id"
+  end
+
   create_table "usuarios", force: :cascade do |t|
     t.string   "nome"
     t.string   "categoria"
-    t.string   "matricula"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
-    t.string   "password_digest"
+    t.string   "iduff"
     t.string   "email"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean  "avaliador"
   end
 
   add_foreign_key "comprovantes", "atividades"

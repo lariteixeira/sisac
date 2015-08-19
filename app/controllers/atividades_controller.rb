@@ -5,7 +5,17 @@ class AtividadesController < ApplicationController
   # GET /atividades
   # GET /atividades.json
   def index
-    @atividades = Atividade.all
+    case current_usuario.categoria
+      when "Aluno"
+        @atividades = Atividade.where({usuario_id: current_usuario.id})
+      # when "Professor"
+      #   @atividades = Atividade.where({professor: [current_usuario.nome , nil]})
+      when "admin" || "Coordenacao" || "Secretaria"
+        @atividades = Atividade.all
+      else
+         @atividades = Atividade.all
+    end
+
     respond_to do |format|
       format.html
       format.pdf do
@@ -36,6 +46,8 @@ class AtividadesController < ApplicationController
   # POST /atividades.json
   def create
     @atividade = current_usuario.atividades.build(atividade_params)
+    @atividade.aluno = current_usuario.nome
+
     #set status Em processamento para nova atividade
     set_status(@atividade)
     
@@ -55,9 +67,6 @@ class AtividadesController < ApplicationController
             end
           }
         end
-
-        #true se tiver comprovante
-        comprovante_status(@atividade)
 
         format.html { redirect_to @atividade, notice: 'Atividade foi criada com sucesso.' }
         format.json { render :show, status: :created, location: @atividade }
@@ -87,7 +96,6 @@ class AtividadesController < ApplicationController
           }
         end
 
-        comprovante_status(@atividade)
         format.html { redirect_to @atividade, notice: 'Atividade foi atualizada.' }
         format.json { render :show, status: :ok, location: @atividade }
       else
@@ -98,7 +106,8 @@ class AtividadesController < ApplicationController
   end
 
   def aceita
-      if @atividade.update_attributes(professor: current_usuario.nome, status: "Aceita")
+      if ( @atividade.update_attributes(status: "Aceita") && current_usuario.professor.atividades << @atividade )
+
         redirect_to @atividade, notice: 'Atividade foi atualizada.'
       else
         render json: @atividade.errors, status: :unprocessable_entity
@@ -123,32 +132,11 @@ class AtividadesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def atividade_params
-      params.require(:atividade).permit(:nome, :status, :documento)
-    end
-
-    def comprovante_status(id)
-      @atividade = Atividade.find(id)
-      if @atividade
-
-        if @atividade.comprovantes.empty?
-          @atividade.update_attribute(:documento, false)
-        else
-          @atividade.update_attribute(:documento, true)
-        end
-
-      end
+      params.require(:atividade).permit(:nome, :status)
     end
 
     def set_status(atividade)
       atividade.status = "Em Processamento"
     end
-
-private
-
-  def authorize_usuario
-    unless current_usuario
-      redirect_to login_path, alert: "Faça o login para continuar."
-    end
-  end
 
 end

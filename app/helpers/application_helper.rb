@@ -1,9 +1,10 @@
 module ApplicationHelper
-	def documento(doc)
+	def tem_comprovante(doc)
 		if doc
 			"Sim"
 		else
-			"Nao"
+			"Não"
 		end
 	end
+	
 end

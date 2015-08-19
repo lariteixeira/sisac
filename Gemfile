@@ -7,16 +7,15 @@ gem 'rails', '4.2.1'
 
 # Use sqlite3 as the database for Active Record
 gem 'pg'
-
-
 gem 'bcrypt', '~> 3.1.10'
-
 gem "paperclip", "~> 4.3"
 gem 'prawn-rails'
-
 gem "letter_opener", :group =>:development
+gem "rolify"
 # Use SCSS for stylesheets
-gem 'bootstrap-sass', '~> 3.2.0'
+-gem 'bootstrap-sass', '~> 3.2.0'
+
+
 gem 'autoprefixer-rails'
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
@@ -34,7 +33,7 @@ gem 'turbolinks'
 gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
-
+gem 'httparty'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
