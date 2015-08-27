@@ -33,19 +33,23 @@
     </div>
 
     <div class="control-group">
+
         <%= f.label "Perfil", class: 'control-label' %>
-        <div class="controls">
+         <div class="controls">
             <% Perfil.all.each do |perfil| %>
                 <%= check_box_tag "usuario[perfil_ids]", perfil.id %>
-                <%= perfil.nome %>
+                <%= perfil.nome.capitalize %><br>
             <% end %>
         </div>
+    
     </div>
+
+
     <br>
 
     <div class="control-group controls btn-group">
         <%= f.submit "Criar", class: 'btn btn-primary' %>
-        <% if current_usuario %>
+        <% if usuario_atual %>
         <%= link_to 'Voltar', root_path, class: 'btn btn-default' %>
         <% else %>
             <%= link_to 'Voltar', login_path, class: 'btn btn-default' %>

@@ -1,0 +1,10 @@
+EI;Orientação de Estágio Supervisionado I;30
+E2;Orientação de Estágio Supervisionado II;30
+A1;Atividades Complementares I;30
+A2;Atividades Complementares II;30
+A3;Atividades Complementares III;30
+A4;Atividades Complementares IV;30
+A5;Atividades Complementares V;30
+A6;Atividades Complementares VI;30
+A7;Atividades Complementares VII;30
+E0;Estágio Supervisionado;120

@@ -8,7 +8,7 @@ class UsuariosController < ApplicationController
 
         respond_to do |format|
           if @usuario.save
-            current_usuario
+            usuario_atual
             session[:usuario_id] = @usuario.id
 
             format.html { redirect_to root_path, notice: 'Usuario foi criado com sucesso.' }

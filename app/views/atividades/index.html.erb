@@ -14,11 +14,9 @@
             <span class="caret"></span>
           </button>
           <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-            <li><a class="filtro">Tudo</a></li>
-            <li><a class="filtro">Processamento</a></li>
-            <li><a class="filtro">Aceita</a></li>
-            <li><a class="filtro">Comprovada</a></li>
-            <li><a class="filtro">Rejeitada</a></li>
+          <% Atividade::STATUS.each do |status| %>
+            <li><a class="filtro"><%= status.capitalize %></a></li>
+            <%end%>
           </ul>
         </div>
       </th>
@@ -36,7 +34,7 @@
 </div>
 
 <div class="btn-group" role="group">
-<% if current_usuario.categoria == "Aluno" %>
+<% if usuario_atual.categoria == "Aluno" %>
   <%= link_to 'Nova Atividade', new_atividade_path, class:"btn btn-default" %>
 <%end%>
 <%= link_to 'Gerar PDF', atividades_path(format: "pdf"), class:"btn btn-default"%>
@@ -45,7 +43,7 @@
 <script type="text/javascript">
   $(".filtro").click(function(){
       status = $(this).text();
-      if(status == "Tudo"){
+      if(status == "Todos"){
         $('tbody tr').show()
       }
       else{

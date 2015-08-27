@@ -5,12 +5,15 @@ Rails.application.routes.draw do
   get   "/login", to: "login#new"
   post  "/login", to: "login#create"
   get "/logout", to:"login#destroy"
+
+  resources :rejeicao, as: "rejeitar"
   resources :usuarios, only: [:new, :create]
   resources :comprovantes, only: [:new, :create]
 
   resources :atividades do
     member do
-      put :aceita
+      get :aceita
+      get :confirma
     end
   end
   

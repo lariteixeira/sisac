@@ -1,0 +1,55 @@
+  <div class="page-header">
+  <h1>Rejeitar - <%= @atividade.nome %></h1>
+</div>
+<%= form_for (@atividade) do |f| %>
+  
+  <% if @atividade.errors.any? %>
+    <div class="alert alert-danger" id="error_explanation">
+      <p><%= pluralize(@atividade.errors.count, "erro") %> ao salvar esta Atividade</p>
+
+      <ul>
+      <% @atividade.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <p>
+    <strong>Nome:</strong>
+    <%= @atividade.nome %>
+  </p>
+
+  <p>
+    <strong>Status:</strong>
+    <%= @atividade.status %>
+  </p>
+
+  <p>
+    <strong>Professor:</strong>
+    <%= nome_professor(@atividade.professor) %>
+  </p>
+
+  <p>
+    <strong>Documento:</strong>
+    <% @atividade.comprovantes.each do |comprovante|%>
+      <a href="<%= comprovante.arquivo.url %>"><%= comprovante.arquivo_file_name %></a> | 
+    <% end %>
+  </p>
+
+  <p>
+    <strong>Aluno:</strong>
+    <%= @atividade.usuario.nome %>
+  </p>
+
+<p>
+    <%= f.label "Motivo de Rejeicao: ", :class => 'control-label' %>
+    <p>Explique o motivo desta atividade nao ser valida.</p>
+    <%= f.hidden_field :status, :value => "Rejeitada" %>
+    <%= f.text_area :motivo %>
+
+</p>
+
+  </br>  <%= f.submit "Enviar", class: 'btn btn-primary' %>
+  <%= link_to 'Voltar', atividades_path, class:"btn btn-default" %>
+<% end %>

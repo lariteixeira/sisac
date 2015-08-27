@@ -12,17 +12,22 @@
     </div>
   <% end %>
 <div class="row">
-  <div class="control-group">
-    <%= f.label :nome, class: 'control-label' %><br>
-    <div class="controls">
-      <%= f.text_field :nome %>
+
+    <div class="dropdown">
+      <%= f.label "Tipo de Atividade Complementar: ", :class => 'control-label' %><br>
+      <%= f.collection_select(:nome, TipoAtividade.all, :nome, :nome, { :prompt => 'Tipo de Atividade Complementar', :selected => @atividade.nome }, { class: 'dropdown' }) %>
     </div>
-  </div>
 
   <div class="control-group">
     <%= f.label :comprovantes, :class => 'control-label' %>
     <div class="controls">
-      <%= file_field_tag "arquivos[]", type: :file, multiple: true %>
+    <p><% @atividade.comprovantes.each do |comprovante|%>
+    <a href="<%= comprovante.arquivo.url %>"><%= comprovante.arquivo_file_name %></a> | 
+    <% end %></p>
+      <%= hidden_field_tag "comprovante_ids[]", @atividade.comprovante_ids %>
+      <%= file_field_tag "arquivos[]", type: :file, multiple: false %>
+      <%= file_field_tag "arquivos[]", type: :file, multiple: false %>
+
     </div>
   </div>
 

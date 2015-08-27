@@ -1,0 +1,11 @@
+class TipoAtividade < ActiveRecord::Base
+	
+
+	CURSOS_DE_EXTENSAO = 1
+	CURSOS_DE_LINGUAS = 2
+	MONITORIAS = 3
+	INICIACAO_CIENTIFICA = 3
+	EVENTOS = 5
+	TRABALHOS_VOLUNTARIOS = 6
+
+end

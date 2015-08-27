@@ -5,18 +5,20 @@ class LoginController < ApplicationController
     end
 
     def create
-        #TODO: Colocar IDUFF no banco
         portal = PortalClient.new
+        #Autentica o usuario no portal do IdUFF
         resposta = portal.login params[:usuario]
+        #Confere se o usuario esta cadastrado no banco do SISAC
         usuario = Usuario.where(iduff: params[:usuario][:iduff]).first
-
-        if resposta["autenticado"] == true
+        if usuario || resposta["autenticado"] == true
+            
             if usuario
                 session[:usuario_id] = usuario.id
                 redirect_to root_path
             else
-                redirect_to new_usuario_path, notice: "Cadastre-se para acessar o Sisac"
+                redirect_to new_usuario_path, notice: "Cadastre-se para acessar o SISAC"
             end
+
         else
             flash.now[:alert] = "Matricula ou senha inválido."
             render action: "new"

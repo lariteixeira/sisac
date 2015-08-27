@@ -3,7 +3,7 @@
 		<tr class="<%= atividade.status %>">
 			<td><%= atividade.nome %></td>
 			<td><%= atividade.status %></td>
-			<td><%= atividade.professor %></td>
+			<td><%= nome_professor(atividade.professor) %></td>
 			<td><%= tem_comprovante(atividade.comprovante_ids) %>
 			</td>
 			<td><%= atividade.usuario.nome %></td>
@@ -12,14 +12,13 @@
 
 					<%= link_to 'Abrir', atividade_path(atividade.id), class:'btn btn-default' %>
 
-					<% if atividade.professor == nil && current_usuario.avaliador %>
-						<%= link_to 'Avaliar', aceita_atividade_path(atividade.id), method: :put, class:'btn btn-default' %>
-					<%else%>
-						<%if atividade.professor != nil%>
-						<%= link_to 'Rejeitar', atividade_path(atividade.id), method: :put, class:'btn btn-default' %>
-						<%= link_to 'Confirmar', atividade_path(atividade.id), method: :put, class:'btn btn-default' %>
-					<%end%><%end%>
-					<% if current_usuario == atividade.usuario %>
+					<% if atividade.professor == nil && usuario_atual.avaliador %>
+						<%= link_to 'Avaliar', aceita_atividade_path(atividade.id), class:'btn btn-default' %>
+					<%elsif atividade.status == "Aceita"%>
+						<%= link_to 'Rejeitar', edit_rejeitar_path(atividade.id), class:'rejeita_ac btn btn-default' %>
+						<%= link_to 'Confirmar', confirma_atividade_path(atividade.id), class:'btn btn-default' %>
+					<%end%>
+					<% if usuario_atual == atividade.usuario %>
 					<%= link_to 'Excluir',  atividade_path(atividade.id), method: :delete, data: {confirm: 'Deseja confirmar?'}, class:'btn btn-default' %>
 					<%end%>
 				</div>
@@ -27,6 +26,9 @@
 			</td>
 
 		</tr>
+		<div class="motivo_rejeicao">
+  
+</div>
 
 	<% end %>
 

@@ -1,0 +1,6 @@
+1;Cursos de Extensão;20;160;Que possuam relação com a área de formação do aluno, presenciais, semipresenciais e a distância.
+2;Cursos de Línguas;0;50;Em qualquer idioma.
+3;Monitorias;0;90;Em disciplinas pertencentes ao currículo do Curso.
+4;Iniciação Científica;0;50;Orientada por docentes da UFF ou realizada em Instituição reconhecida pela Coordenação do Curso.
+5;Eventos;20;160;Seminários, simpósios, congressos, conferências, worksohps, oficinas e outros na área de formação do aluno.
+6;Trabalhos Voluntários;0;50;Realizados em organizações não governamentais.

@@ -1,47 +1,54 @@
-<div class="page-header">
-<h1>Atividade Complementar - <%= @atividade.nome %></h1>
-</div>
-<p>
-  <strong>Nome:</strong>
-  <%= @atividade.nome %>
-</p>
+  <div class="page-header">
+  <h1>Atividade Complementar - <%= @atividade.nome %></h1>
+  </div>
+  <p>
+    <strong>Nome:</strong>
+    <%= @atividade.nome %>
+  </p>
 
-<p>
-  <strong>Status:</strong>
-  <%= @atividade.status %>
-</p>
+  <p>
+    <strong>Status:</strong>
+    <%= @atividade.status %>
+  </p>
 
-<p>
-  <strong>Professor:</strong>
-  <%= @atividade.professor %>
-</p>
+  <p>
+    <strong>Professor:</strong>
+    <%= nome_professor(@atividade.professor) %>
+  </p>
 
-<p>
-  <strong>Documento:</strong>
-  <% @atividade.comprovantes.each do |comprovante|%>
-    <a href="<%= comprovante.arquivo.url %>"><%= comprovante.arquivo_file_name %></a> | 
-  <% end %>
-</p>
+  <p>
+    <strong>Documento:</strong>
+    <% @atividade.comprovantes.each do |comprovante|%>
+      <a href="<%= comprovante.arquivo.url %>"><%= comprovante.arquivo_file_name %></a> | 
+    <% end %>
+  </p>
 
-<p>
-  <strong>Aluno:</strong>
-  <%= @atividade.usuario.nome %>
-</p>
+  <p>
+    <strong>Aluno:</strong>
+    <%= @atividade.usuario.nome %>
+  </p>
 
-<div class="motivo_rejeicao">
-  
-</div>
+<%if @atividade.status == "Rejeitada"%>
+  <p>
+    <strong>Motivo de Rejeicao:</strong>
+    <%= @atividade.motivo %>
+  </p>
+  <%end%>
 
-<%= link_to 'Editar', edit_atividade_path(@atividade), class:"btn btn-default" %>
-<%= link_to 'Voltar', atividades_path, class:"btn btn-default" %>
-<%= link_to 'Confimar', atividades_path, class:"btn btn-default" %>
-<div class="btn btn-default rejeita_ac" >Rejeitar
-</div>
 
-<script>
-  $(".rejeita_ac").click(function(){
-        
-  $( "<strong>Motivo da rejeicão:</strong><p><textarea cols=\"50\" rows=\"10\"></textarea></p>" ).appendTo( ".motivo_rejeicao" );
-  })
-</script>
+  <%= link_to 'Editar', edit_atividade_path(@atividade), class: 'btn btn-default' %>
+  <%= link_to 'Voltar', atividades_path, class:"btn btn-default" %>
+
+  <% if @atividade.professor == nil && usuario_atual.avaliador %>
+
+    <%= link_to 'Avaliar', class:'btn btn-default' %>
+
+  <%elsif @atividade.status == "Aceita"%>
+
+    <%= link_to 'Rejeitar', edit_rejeitar_path, class:'btn btn-default' %>
+    <%= link_to 'Confirmar', confirma_atividade_path(@atividade.id), method: :put, class:'btn btn-default' %>
+
+  <%end%>
+
+
 

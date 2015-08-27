@@ -26,8 +26,8 @@ end
 def line_items
 	move_down 20
 	font_size 12
-	data = [["Nome", "Status", "Professor", "Documento", "Aluno"]] +
-	@atividades.collect{ |a| [a.nome, a.status, a.professor.to_s, a.documento.to_s, a.usuario.nome.to_s]}
+	data = [["Nome", "Status", "Professor", "Aluno"]] +
+	@atividades.collect{ |a| [a.nome, a.status, a.professor.to_s, a.usuario.nome.to_s]}
 	table (data), :row_colors => ["DDDDDD", "FFFFFF"]
 	move_down 30
 end

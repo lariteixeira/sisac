@@ -6,14 +6,27 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-# puts "Adicionando Tipos"
+puts "Adicionando Perfis de Usuario"
 
 Perfil.transaction do
   File.open(File.expand_path("../../doc/lista_perfis.txt", __FILE__), "r") do |perfis|
     perfis.read.each_line do |perfil|
       array = perfil.split(/;/)
-      unless Perfil.find_by_id(array[0].to_i)
+      unless Perfil.where(:id => array[0].to_i).first
         t = Perfil.create(:id => array[0].to_i, :nome => array[1].strip)
+      end
+    end
+  end
+end
+
+puts "Adicionando Tipos de Atividade"
+
+TipoAtividade.transaction do
+  File.open(File.expand_path("../../doc/lista_atividades.txt", __FILE__), "r") do |tipoAtividades|
+    tipoAtividades.read.each_line do |tipoAtividade|
+      array = tipoAtividade.split(/;/)
+      unless TipoAtividade.where(:id => array[0].to_i).first
+        t = TipoAtividade.create(:id => array[0].to_i, :nome => array[1].strip)
       end
     end
   end
