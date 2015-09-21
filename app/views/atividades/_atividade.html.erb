@@ -1,37 +1,19 @@
 
-	<% @atividades.each do |atividade| %>
-		<tr class="<%= atividade.status %>">
-			<td><%= atividade.nome %></td>
-			<td><%= atividade.status %></td>
-			<td><%= nome_professor(atividade.professor) %></td>
-			<td><%= tem_comprovante(atividade.comprovante_ids) %>
-			</td>
-			<td><%= atividade.usuario.nome %></td>
-			<td>
-				<div class="btn-group" role="group">
-
-					<%= link_to 'Abrir', atividade_path(atividade.id), class:'btn btn-default' %>
-
-					<% if atividade.professor == nil && usuario_atual.avaliador %>
-						<%= link_to 'Avaliar', aceita_atividade_path(atividade.id), class:'btn btn-default' %>
-					<%elsif atividade.status == "Aceita"%>
-						<%= link_to 'Rejeitar', edit_rejeitar_path(atividade.id), class:'rejeita_ac btn btn-default' %>
-						<%= link_to 'Confirmar', confirma_atividade_path(atividade.id), class:'btn btn-default' %>
-					<%end%>
-					<% if usuario_atual == atividade.usuario %>
-					<%= link_to 'Excluir',  atividade_path(atividade.id), method: :delete, data: {confirm: 'Deseja confirmar?'}, class:'btn btn-default' %>
-					<%end%>
-				</div>
-
-			</td>
-
-		</tr>
-		<div class="motivo_rejeicao">
-  
-</div>
-
-	<% end %>
-
+<% @atividades.each do |atividade| %>
+<tr class='<%= atividade.status %> clickable-row' data-href='/atividades/<%=atividade.id%>'>
+	<td><%= atividade.nome %></td>
+	<td><%= tem_comprovante(atividade.comprovante_ids) %></td>
+	<td><%= atividade.aluno.usuario.nome %></td>
+	<td><%= atividade.professor.usuario.nome %></td>
+	<td><%= atividade.created_at.localtime.strftime("%d-%m-%y") %></td>
+	<td><%= atividade.updated_at.localtime.strftime("%d-%m-%y") %></td>
+	<td class="status"><%= atividade.status %></td>
+	<td>
+	<% if usuario_atual == atividade.aluno.usuario && atividade.status == "Registrada"%>
+  	<%= link_to 'Excluir',  atividade_path(atividade.id), method: :delete, data: {confirm: 'Deseja confirmar?'}, class:'btn btn-danger' %></td>
+  <%end%>
+</tr>
+<% end %>
 
 
 

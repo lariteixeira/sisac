@@ -1,0 +1,33 @@
+<h1> Validar Declarações </h1>
+
+<fieldset id="dados_do_aluno">
+  <legend>Dados do aluno</legend>
+  <div>
+    <p><b>Nome:</b>
+      <%= @usuario.nome %></p>
+  </div>
+  <div>
+    <p><b>CPF:</b> <%= @usuario.iduff %></p>
+  </div>
+  <div>
+    <p><b>Curso:</b>  <%= @usuario.curso %> </p>
+  </div>
+</fieldset>
+
+<fieldset id="dados_da_declaracao">
+  <legend>Dados da declaracao</legend>
+  <div>
+    <p><b>Data de emissão:</b></p>
+    <p> <%= @declaracao.created_at.strftime("%d/%m/%Y %H:%M:%S") %></p>
+  </div>
+  <div>
+    <p><b>Texto:</b></p>
+    <p><%= @declaracao.texto %></p>
+  </div>
+  <div>
+    <p><b>Chave:</b></p>
+    <p> <%= @declaracao.chave %></p>
+  </div>
+</fieldset>
+
+<%= link_to "Voltar", root_path, :class => 'btn' %>

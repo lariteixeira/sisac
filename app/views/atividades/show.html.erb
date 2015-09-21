@@ -1,6 +1,7 @@
   <div class="page-header">
   <h1>Atividade Complementar - <%= @atividade.nome %></h1>
   </div>
+
   <p>
     <strong>Nome:</strong>
     <%= @atividade.nome %>
@@ -18,8 +19,13 @@
 
   <p>
     <strong>Documento:</strong>
-    <% @atividade.comprovantes.each do |comprovante|%>
-      <a href="<%= comprovante.arquivo.url %>"><%= comprovante.arquivo_file_name %></a> | 
+    <br><% @atividade.comprovantes.each_with_index do |comprovante, index|%>
+      Arquivo <%= index+1 %>:
+      <a href="<%= comprovante.arquivo.url %>" target="_tab"><%= comprovante.arquivo_file_name %></a> 
+      <% if @atividade.status == "Registrada" %>
+      <%= link_to("<span class=\"glyphicon glyphicon\-remove\" aria-hidden=\"true\"></span>".html_safe, {action: :remove_arquivo, id: @atividade.id}, method: :put, data: { confirm: 'Deseja remover este arquivo?' })%> 
+      <%end%>
+    <br>
     <% end %>
   </p>
 
@@ -28,27 +34,44 @@
     <%= @atividade.usuario.nome %>
   </p>
 
-<%if @atividade.status == "Rejeitada"%>
   <p>
-    <strong>Motivo de Rejeicao:</strong>
-    <%= @atividade.motivo %>
+    <strong>Descrição:</strong>
+    <%= @atividade.descricao %>
   </p>
+
+  <%if @atividade.status == "Rejeitada"%>
+    <p>
+      <strong>Motivo de Rejeicao:</strong>
+      <%= @atividade.motivo %>
+    </p>
   <%end%>
 
+<!-- Açoes do usuario -->
 
-  <%= link_to 'Editar', edit_atividade_path(@atividade), class: 'btn btn-default' %>
-  <%= link_to 'Voltar', atividades_path, class:"btn btn-default" %>
+<div class="btn-group" role="group">
 
-  <% if @atividade.professor == nil && usuario_atual.avaliador %>
+  <%if usuario_atual.categoria == "Professor" || usuario_atual.categoria == "Administrador"%>
 
-    <%= link_to 'Avaliar', class:'btn btn-default' %>
-
-  <%elsif @atividade.status == "Aceita"%>
-
-    <%= link_to 'Rejeitar', edit_rejeitar_path, class:'btn btn-default' %>
-    <%= link_to 'Confirmar', confirma_atividade_path(@atividade.id), method: :put, class:'btn btn-default' %>
+    <% if @atividade.professor.nil?%>
+      <%= link_to 'Avaliar', avalia_atividade_path(@atividade.id), class:'btn btn-warning' %>
+    <%elsif @atividade.status == "Processando"%>
+      <%= link_to 'Validar', valida_atividade_path(@atividade.id), class:'btn btn-success' %>
+      <%= link_to 'Rejeitar', edit_rejeitar_path(@atividade.id), class:'rejeita_ac btn btn-danger' %>
+    <%end%>
 
   <%end%>
+
+  <%if @atividade.status == 'Validada' && (usuario_atual.categoria == "Coordenacao" || usuario_atual.categoria == "Administrador" )%>
+    <%= link_to 'Confirmar', confirma_atividade_path(@atividade.id), class:'btn btn-success' %>
+    <%= link_to 'Cancelar', cancela_atividade_path(@atividade.id), class:'btn btn-danger' %>
+  <%end%>
+  <% if usuario_atual == @atividade.usuario && @atividade.status == "Registrada"%>
+  <%= link_to 'Excluir',  atividade_path(@atividade.id), method: :delete, data: {confirm: 'Deseja confirmar?'}, class:'btn btn-danger' %>
+  <%end%>
+
+  <%= link_to 'Voltar', atividades_path, class:'btn btn-default' %>
+
+</div>
 
 
 

@@ -16,4 +16,6 @@
 # end
 ActiveSupport::Inflector.inflections do |inflect|
 	inflect.irregular 'perfil', 'perfis'
+	inflect.irregular 'declaracao', 'declaracoes'
+	inflect.irregular 'professor', 'professores'
 end

@@ -5,19 +5,28 @@ Rails.application.routes.draw do
   get   "/login", to: "login#new"
   post  "/login", to: "login#create"
   get "/logout", to:"login#destroy"
+  get "/usuarios/edit", to:"usuarios#edit"
 
   resources :rejeicao, as: "rejeitar"
-  resources :usuarios, only: [:new, :create]
+  resources :usuarios, only: [:new, :create, :edit, :update]
   resources :comprovantes, only: [:new, :create]
+  resources :declaracoes
 
   resources :atividades do
     member do
-      get :aceita
+      get :avalia
+      get :valida
       get :confirma
+      get :cancela
+      put :remove_arquivo
     end
   end
-  
-  
+
+  get 'declaracoes' => 'declaracoes#index'
+  get 'validar_declaracao_index' => 'declaracoes#validar_declaracao_index'
+  post 'validar_declaracao' => 'declaracoes#validar_declaracao'
+  get "declaracao_atividades_#{Time.now.to_i}.pdf", to: 'declaracoes#declaracao_atividades', format: 'pdf', as: "declaracao_atividades"
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

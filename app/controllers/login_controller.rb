@@ -1,5 +1,5 @@
 class LoginController < ApplicationController
-
+    before_filter :check_usuario
     def new
 
     end

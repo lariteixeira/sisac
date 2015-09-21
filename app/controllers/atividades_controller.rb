@@ -1,30 +1,22 @@
 class AtividadesController < ApplicationController
   before_filter :authorize_usuario
-  before_action :set_atividade, only: [:show, :edit, :update, :destroy, :aceita, :confirma, :rejeita]
+  before_action :set_atividade, only: [:show, :edit, :update, :destroy, :avalia, :valida, :confirma, :cancela, :remove_arquivo]
 
   # GET /atividades
   # GET /atividades.json
   def index
     case usuario_atual.categoria
       when "Aluno"
-        @atividades = Atividade.where({usuario_id: usuario_atual.id})
-      # when "Professor"
-      #   @atividades = Atividade.where({professor: [usuario_atual.nome , nil]})
-      when "admin" || "Coordenacao" || "Secretaria"
-        @atividades = Atividade.all
+        @atividades = Atividade.where({usuario_id: usuario_atual.id}).group("status", "id")
+      when "Professor"
+         @atividades = Atividade.where({professor: [usuario_atual.nome , nil]})
+      when "Administrador" || "Coordenacao" || "Secretaria"
+        @atividades = Atividade.all.group("status", "id")
       else
-         @atividades = Atividade.all
+         @atividades = Atividade.all.group("status", "id")
     end
-
     respond_to do |format|
       format.html
-      format.pdf do
-        pdf = AtividadePdf.new(@atividades)
-        send_data pdf.render, filename: "atividade",
-                              type: "application/pdf",
-                              disposition: "inline"
-
-      end
     end
   end
 
@@ -45,33 +37,18 @@ class AtividadesController < ApplicationController
   # POST /atividades
   # POST /atividades.json
   def create
+
     @atividade = usuario_atual.atividades.build(atividade_params)
     @atividade.aluno = usuario_atual.nome
-
-    #set status Em processamento para nova atividade
-    set_status(@atividade)
-    
-    UsuarioMailer.novo_pedido_email(usuario_atual).deliver_now
+    @atividade.status = "Registrada" #TODO check set default options
 
     respond_to do |format|
       if @atividade.save
-
-        #salva os comprovantes
-        if params[:arquivos]
-          params[:arquivos].each_with_index { |arquivo, index|
-            if @atividade.comprovantes.create(arquivo: arquivo, arquivo_file_name: Comprovante.nome_arquivo(usuario_atual.nome, index))
-              format.html { render :show, notice: 'Comprovante foi salvo.' }
-              format.json { render :show, status: :ok, location: @atividade }
-            else
-              format.html { render :edit, alert: "Nao foi possivel salvar o comprovante" }
-            end
-          }
-        end
-
+        # UsuarioMailer.novo_pedido_email(usuario_atual, "registrada").deliver_now
         format.html { redirect_to @atividade, notice: 'Atividade foi criada com sucesso.' }
         format.json { render :show, status: :created, location: @atividade }
       else
-        format.html { render :new }
+        format.html { render :new, alert: 'Atividade nao pode ser criada' }
         format.json { render json: @atividade.errors, status: :unprocessable_entity }
       end
     end
@@ -85,21 +62,14 @@ class AtividadesController < ApplicationController
       if @atividade.update(atividade_params)
 
         if params[:arquivos]
+
           params[:arquivos].each_with_index { |arquivo, index|
-            # if params[:comprovante_ids]
-              # comp_index = params[:comprovante_ids].first
-              # outro_index = params[:comprovante_ids].last
 
-            titulo = Comprovante.nome_arquivo(usuario_atual.nome, index)
-            
-
-            if @atividade.comprovantes.create(arquivo: arquivo, arquivo_file_name: titulo)
-              format.html { redirect_to @atividade, notice: 'Comprovante foi salvo.' }
-              format.json { render :show, status: :ok, location: @atividade }
-            else
-              format.html { render :edit, alert: "Nao foi possivel salvar o comprovante" }
+            @comprovante = Comprovante.novo_comprovante(arquivo, index, usuario_atual.nome)
+            @comprovante.atividade = @atividade
+            if !@comprovante.save
+              flash[:alert] = "Nao foi possivel salvar o comprovante"
             end
-
           }
         end
 
@@ -112,33 +82,41 @@ class AtividadesController < ApplicationController
     end
   end
 
-  def aceita
-      if @atividade.update_attributes({:status => "Aceita", :professor => usuario_atual.id.to_s})
-       # && usuario_atual.professor.atividades << @atividade )
-
+  def avalia
+    ac_status = "Processando"
+    if @atividade.update_attributes(status: ac_status, professor: usuario_atual.id.to_s)
+        UsuarioMailer.novo_pedido_email(usuario_atual, ac_status ).deliver_now
         redirect_to @atividade, notice: 'Atividade foi atualizada.'
       else
         render json: @atividade.errors, status: :unprocessable_entity
       end
   end
 
-  # def rejeita
-  #   if @atividade.update_attributes({:status => "Rejeitada", :motivo => params[:motivo]})
-  #     #enviar email
-  #     redirect_to atividades_path, notice: 'Atividade foi atualizada.'
-  #   else
-  #     render json: @atividade.errors, status: :unprocessable_entity
-  #   end
-  # end
-
-  # def rejeita_index
-  #   redirect_to , notice: 'Atividade foi atualizada.'
-  # end
+  def valida
+   ac_status = "Validada"
+    if @atividade.update_attributes(status: ac_status)
+      UsuarioMailer.novo_pedido_email(usuario_atual, ac_status).deliver_now
+      redirect_to @atividade, notice: 'Atividade foi atualizada.'
+    else
+      render json: @atividade.errors, status: :unprocessable_entity
+    end
+  end
 
   def confirma
-      if @atividade.update_attributes({:status=> "Confirmada"})
-
+    ac_status = "Confirmada"
+      if @atividade.update_attributes(status: ac_status)
+        UsuarioMailer.novo_pedido_email(usuario_atual, ac_status).deliver_now
         redirect_to @atividade, notice: 'Atividade foi atualizada.'
+      else
+        render json: @atividade.errors, status: :unprocessable_entity
+      end
+  end
+
+  def cancela
+    ac_status = "Cancelada"
+    if @atividade.update_attributes(status: ac_status)
+      UsuarioMailer.novo_pedido_email(usuario_atual, ac_status).deliver_now
+      redirect_to @atividade, notice: 'Atividade foi atualizada.'
       else
         render json: @atividade.errors, status: :unprocessable_entity
       end
@@ -154,6 +132,17 @@ class AtividadesController < ApplicationController
     end
   end
 
+  def remove_arquivo
+
+     c = @atividade.comprovantes[params[:comp_index].to_i]
+     c.destroy
+     @atividade.save
+     respond_to do |format|
+       format.html { redirect_to @atividade, notice: 'Arquivo removido.' }
+       format.json { render :show, status: :ok, location: @atividade }
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_atividade
@@ -164,9 +153,4 @@ class AtividadesController < ApplicationController
     def atividade_params
       params.require(:atividade).permit(:nome, :status, :professor, :motivo)
     end
-
-    def set_status(atividade)
-      atividade.status = "Em Processamento"
-    end
-
 end

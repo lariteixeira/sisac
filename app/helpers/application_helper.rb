@@ -7,15 +7,15 @@ module ApplicationHelper
 		end
 	end
 
-	def nome_professor(index)
+	# def nome_professor(index)
 		
-		professor = Usuario.where(id: index.to_i).first
-		if professor.blank?
-			"a definir"
-		else
-			professor.nome
-		end
+	# 	professor = Usuario.where(id: index.to_i).first
+	# 	if professor.blank?
+	# 		"a definir"
+	# 	else
+	# 		professor.nome
+	# 	end
 
-	end
+	# end
 	
 end

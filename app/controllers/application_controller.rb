@@ -17,6 +17,12 @@ private
         end
     end
 
+    def check_usuario
+      if usuario_atual
+        redirect_to root_path
+      end
+    end
+
     
   #   def configura_e_produz_relatorio(nome_arquivo, nome_relatorio)
   #   respond_to do |format|

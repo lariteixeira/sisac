@@ -1,0 +1,58 @@
+
+<div class="page-header">
+<h1> Validar Autenticidade de Declaração </h1>
+</div>
+
+<div>
+  <p>Nesta página é possível validar as declarações geradas pelo sistema de Pós-Graduação da UFF para verificar sua
+    autenticidade. Toda declaração possui uma chave de validação no rodapé do documento que serve para este fim.</p>
+</div>
+
+<br>
+<div>
+  <p>Digite a chave e o CPF da pessoa referida na declaração nos campos abaixo para validá-la:</p>
+  
+  <%= form_tag(validar_declaracao_path) do %>
+    <div id="validar_declaracao">
+        <p>
+          <%= label_tag :cpf, "CPF: " %>
+          <%= text_field_tag(:cpf, nil, :class => "campo_iduff") %>
+        </p>
+        <p>
+          <%= label_tag :chave, "Chave:"%>
+          <%= text_field_tag(:chave_1, nil, :class => "campo_chave", :name => "chave[1]", :style => "width: 50px !important;") %>
+          .<%= text_field_tag(:chave_2, nil, :class => "campo_chave", :name => "chave[2]", :style => "width: 50px !important;") %>
+          .<%= text_field_tag(:chave_3, nil, :class => "campo_chave", :name => "chave[3]", :style => "width: 50px !important;") %>
+          .<%= text_field_tag(:chave_4, nil, :class => "campo_chave", :name => "chave[4]", :style => "width: 50px !important;") %>
+        </p>
+          <%= submit_tag "Validar", :id => "submit" , :class => 'btn btn-primary'%>
+
+    </div>
+<% end %>
+</div>
+
+<script type="text/javascript">
+
+    // $(document).ready(function ($) {
+    //     $(".campo_chave").inputmask("****");
+    // });
+
+    $(document).ready(function () {
+        function muda_foco_ao_atingir_tamanho(el1, el2, tam) {
+            el1.keyup(function () {
+                str = $(this).val()
+                str = str.replace(/_/g, "")
+                if (str.length == tam) {
+                    el2.focus();
+                }
+            });
+        }
+
+        muda_foco_ao_atingir_tamanho($("#chave_1"), $("#chave_2"), 4)
+        muda_foco_ao_atingir_tamanho($("#chave_2"), $("#chave_3"), 4)
+        muda_foco_ao_atingir_tamanho($("#chave_3"), $("#chave_4"), 4)
+        muda_foco_ao_atingir_tamanho($("#chave_4"), $("#submit"), 4)
+
+    });
+</script>
+

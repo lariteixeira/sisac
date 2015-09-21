@@ -6,10 +6,13 @@
   <body>
     <h1>Olá, <%= @usuario.nome %></h1>
     <p>
-      Sua Atividade Complementar foi cadastrada com sucesso. Clique no link abaixo se deseja avaliar esse pedido.<br>
+      Sua Atividade Complementar foi alterada. O status atual é:<br>
+      <spam class="<%= @status%>"><%= @status%></spam>
     </p>
+    <br><br>
     <p>
-      <%= @url %>.
+      Clique no link abaixo se deseja avaliar esse pedido:<br>
+      <%= @url %>
     </p>
     <p>Atenciosamente,<br>
     SISAC</p>

@@ -5,16 +5,23 @@ $blue: random(256)-1
 $navbar-default-bg: #218cce
 $navbar-default-link-color: #fff
 
-.Processamento
+.Registrada .status
+	color: black
+
+.Processando .status
 	color: #005273
-.Aceita
+
+.Validada .status
 	color: #306100
 
-.Rejeitada
+.Rejeitada .status
 	color: #FE0001
 
-.Comfirmada
-	color: rgb(random(256)-1, random(256)-1, random(256)-1)
+.Confirmada .status
+	color: #7eb787
+
+.Cancelada .status
+	color: #FE0001
 
 .footer
 	padding-top: 10px
@@ -25,10 +32,9 @@ $navbar-default-link-color: #fff
 	margin-bottom: 100px
 
 .page-header h1
-	background-color: #DDDDCF
+	background-color: #ffe3cf
 	font-size: 20px
 	padding: 10px
-	color: #5E5E44
 
 @import "bootstrap-sprockets"
 @import "bootstrap"

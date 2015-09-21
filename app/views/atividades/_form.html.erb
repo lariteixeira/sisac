@@ -11,22 +11,28 @@
       </ul>
     </div>
   <% end %>
-<div class="row">
+<div>
 
     <div class="dropdown">
       <%= f.label "Tipo de Atividade Complementar: ", :class => 'control-label' %><br>
       <%= f.collection_select(:nome, TipoAtividade.all, :nome, :nome, { :prompt => 'Tipo de Atividade Complementar', :selected => @atividade.nome }, { class: 'dropdown' }) %>
     </div>
+<br>
+
+    <div>
+    <%= f.label "Descrição: "%><br>
+    <%= f.text_area :descricao%>
+    </div>
 
   <div class="control-group">
-    <%= f.label :comprovantes, :class => 'control-label' %>
+    <%= f.label :comprovantes, class: 'control-label' %>
     <div class="controls">
     <p><% @atividade.comprovantes.each do |comprovante|%>
     <a href="<%= comprovante.arquivo.url %>"><%= comprovante.arquivo_file_name %></a> | 
     <% end %></p>
       <%= hidden_field_tag "comprovante_ids[]", @atividade.comprovante_ids %>
-      <%= file_field_tag "arquivos[]", type: :file, multiple: false %>
-      <%= file_field_tag "arquivos[]", type: :file, multiple: false %>
+      <%= file_field_tag "arquivos[]", type: :file, multiple: false, accept: 'application/pdf' %>
+      <%= file_field_tag "arquivos[]", type: :file, multiple: false, accept: 'application/pdf' %>
 
     </div>
   </div>
@@ -35,6 +41,6 @@
 
   </div>
 
-  </br>  <%= f.submit "Enviar", class: 'btn btn-primary' %>
+  </br>  <%= f.submit "Salvar", class: 'btn btn-primary' %>
   <%= link_to 'Voltar', atividades_path, class:"btn btn-default" %>
 <% end %>
