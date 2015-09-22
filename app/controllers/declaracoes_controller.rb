@@ -9,20 +9,24 @@ class DeclaracoesController < ApplicationController
 	    (1..4).each do |i|
 	      chave << params[:chave]["#{i}"].upcase
 	    end
-	    @declaracao = Declaracao.where({chave: chave.join("."), iduff: params[:iduff]})
-
-	    if @declaracao
-	      @usuario = @declaracao.usuario
-	      if @declaracao.tipo == 1
-	        texto = @declaracao.texto.split('[]')
-	        @informacoes_aluno = texto.shift.split('#')
-	        @tabela = texto.map { |b| b.split('#') }
-	        render root_path
+	   d = Declaracao.where("chave = ?", chave.join(".")).first
+	   if d
+	   	decl = d.to_json
+	   		declaracao = JSON.parse(decl)
+	    if declaracao.any?
+	      @usuario = Usuario.find(declaracao['usuario_id'])
+	      tabela = declaracao['tabela']
+	      respond_to do |format|
+		  format.html { redirect_to validar_declaracao_index_path, notice: 'Declaracao válida.'}
+	    end
+	        
 	      end
 	    else
-	      flash[:error] = "Declaração não encontrada. Por favor, confira o CPF e a chave."
-	      redirect_to validar_declaracao_index_path
+	    	respond_to do |format|
+				format.html { redirect_to validar_declaracao_index_path, alert: 'Declaração não encontrada. Por favor, confira o CPF e a chave.'}
+	        
 	    end
+	   end
 	end
 
 	def declaracao_atividades
@@ -32,6 +36,8 @@ class DeclaracoesController < ApplicationController
     	respond_to do |format|
 	      format.pdf do
           pdf = DeclaracaoPdf.new(@declaracao, view_context, @hora)
+          # @declaracao.arquivo = pdf
+          # @declaracao.save
           send_data pdf.render, type: "application/pdf",
                               disposition: "inline"
           end

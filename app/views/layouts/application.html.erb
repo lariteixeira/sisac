@@ -15,8 +15,7 @@
     </div>
     <div class="navbar-collapse collapse">
         <ul id="app-menu" class="nav navbar-nav navbar-right">
-          <li><%= link_to "Home", root_path %></li>
-          
+          <li><a href="/validar_declaracao_index">Validar Declaração</a></li>
           <% if usuario_atual %>
             <% if usuario_atual.categoria == "Aluno" %>
           
@@ -26,6 +25,7 @@
             <li><a><%= usuario_atual.categoria.capitalize %>: <%= usuario_atual.nome.capitalize %></a></li>
             <li><%= link_to "Logout", logout_path %></li>
           <% else %>
+
             
             <li><%= link_to "Login", login_path %></li> 
           <% end %>

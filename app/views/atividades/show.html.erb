@@ -14,7 +14,7 @@
 
   <p>
     <strong>Professor:</strong>
-    <%= nome_professor(@atividade.professor) %>
+    <%= @atividade.professor.usuario.nome %>
   </p>
 
   <p>
@@ -31,7 +31,7 @@
 
   <p>
     <strong>Aluno:</strong>
-    <%= @atividade.usuario.nome %>
+    <%= @atividade.aluno.usuario.nome %>
   </p>
 
   <p>
@@ -65,7 +65,7 @@
     <%= link_to 'Confirmar', confirma_atividade_path(@atividade.id), class:'btn btn-success' %>
     <%= link_to 'Cancelar', cancela_atividade_path(@atividade.id), class:'btn btn-danger' %>
   <%end%>
-  <% if usuario_atual == @atividade.usuario && @atividade.status == "Registrada"%>
+  <% if usuario_atual == @atividade.aluno.usuario && @atividade.status == "Registrada"%>
   <%= link_to 'Excluir',  atividade_path(@atividade.id), method: :delete, data: {confirm: 'Deseja confirmar?'}, class:'btn btn-danger' %>
   <%end%>
 

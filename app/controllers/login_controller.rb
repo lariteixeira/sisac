@@ -1,5 +1,5 @@
 class LoginController < ApplicationController
-    before_filter :check_usuario
+    before_filter :check_usuario, only: [:create]
     def new
 
     end

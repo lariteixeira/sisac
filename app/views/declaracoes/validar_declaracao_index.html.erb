@@ -15,17 +15,17 @@
   <%= form_tag(validar_declaracao_path) do %>
     <div id="validar_declaracao">
         <p>
-          <%= label_tag :cpf, "CPF: " %>
-          <%= text_field_tag(:cpf, nil, :class => "campo_iduff") %>
+          <%= label_tag :iduff, "CPF: " %>
+          <%= text_field_tag(:iduff, nil, class: "campo_iduff") %>
         </p>
         <p>
           <%= label_tag :chave, "Chave:"%>
-          <%= text_field_tag(:chave_1, nil, :class => "campo_chave", :name => "chave[1]", :style => "width: 50px !important;") %>
-          .<%= text_field_tag(:chave_2, nil, :class => "campo_chave", :name => "chave[2]", :style => "width: 50px !important;") %>
-          .<%= text_field_tag(:chave_3, nil, :class => "campo_chave", :name => "chave[3]", :style => "width: 50px !important;") %>
-          .<%= text_field_tag(:chave_4, nil, :class => "campo_chave", :name => "chave[4]", :style => "width: 50px !important;") %>
+          <%= text_field_tag(:chave_1, nil, class: "campo_chave", name: "chave[1]", style: "width: 50px !important;") %>
+          .<%= text_field_tag(:chave_2, nil, class: "campo_chave", name: "chave[2]", style: "width: 50px !important;") %>
+          .<%= text_field_tag(:chave_3, nil, class: "campo_chave", name: "chave[3]", style: "width: 50px !important;") %>
+          .<%= text_field_tag(:chave_4, nil, class: "campo_chave", name: "chave[4]", style: "width: 50px !important;") %>
         </p>
-          <%= submit_tag "Validar", :id => "submit" , :class => 'btn btn-primary'%>
+          <%= submit_tag "Validar", :id => "submit" , class: 'btn btn-primary'%>
 
     </div>
 <% end %>

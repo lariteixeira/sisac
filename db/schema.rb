@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150921024031) do
+ActiveRecord::Schema.define(version: 20150922181014) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -61,8 +61,12 @@ ActiveRecord::Schema.define(version: 20150921024031) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "usuario_id"
-    t.text     "tabela",     array: true
+    t.text     "tabela",               array: true
     t.integer  "aluno_id"
+    t.string   "arquivo_file_name"
+    t.string   "arquivo_content_type"
+    t.integer  "arquivo_file_size"
+    t.datetime "arquivo_updated_at"
   end
 
   add_index "declaracoes", ["aluno_id"], name: "index_declaracoes_on_aluno_id", using: :btree
