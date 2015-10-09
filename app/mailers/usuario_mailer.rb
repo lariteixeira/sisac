@@ -5,6 +5,6 @@ class UsuarioMailer < ApplicationMailer
 		@usuario = usuario
 		@status = status
 		@url = 'www.sisac.uff.br'
-		mail(to: 'larissateixeira@id.uff.br',subject: 'Pedido de avaliação de Atividade Complementar- SisAC')
+		mail(to: '',subject: 'Pedido de avaliação de Atividade Complementar- SisAC')
 	end
 end

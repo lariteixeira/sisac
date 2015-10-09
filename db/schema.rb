@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150922181014) do
+ActiveRecord::Schema.define(version: 20150929003849) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -40,6 +40,11 @@ ActiveRecord::Schema.define(version: 20150922181014) do
   add_index "atividades", ["professor_id"], name: "index_atividades_on_professor_id", using: :btree
   add_index "atividades", ["usuario_id"], name: "index_atividades_on_usuario_id", using: :btree
 
+  create_table "atividades_declaracoes", force: :cascade do |t|
+    t.integer "atividade_id"
+    t.integer "declaracao_id"
+  end
+
   create_table "comprovantes", force: :cascade do |t|
     t.integer  "atividade_id"
     t.datetime "created_at",           null: false
@@ -54,22 +59,18 @@ ActiveRecord::Schema.define(version: 20150922181014) do
   add_index "comprovantes", ["atividade_id"], name: "index_comprovantes_on_atividade_id", using: :btree
 
   create_table "declaracoes", force: :cascade do |t|
-    t.text     "texto"
-    t.integer  "tipo"
     t.string   "chave"
     t.string   "iduff"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "usuario_id"
     t.text     "tabela",               array: true
-    t.integer  "aluno_id"
     t.string   "arquivo_file_name"
     t.string   "arquivo_content_type"
     t.integer  "arquivo_file_size"
     t.datetime "arquivo_updated_at"
   end
 
-  add_index "declaracoes", ["aluno_id"], name: "index_declaracoes_on_aluno_id", using: :btree
   add_index "declaracoes", ["usuario_id"], name: "index_declaracoes_on_usuario_id", using: :btree
 
   create_table "perfis", force: :cascade do |t|

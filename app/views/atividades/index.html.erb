@@ -38,7 +38,9 @@
 <% if usuario_atual.categoria == "Aluno" || usuario_atual.categoria == "Administrador" %>
   <%= link_to 'Nova Atividade', new_atividade_path, class:"btn btn-primary" %>
 <%end%>
-<%= link_to 'Gerar PDF', declaracao_atividades_path(format: "pdf"), method: :get, class:"btn btn-default", target: "_tab"%>
+<%= link_to 'Gerar Declaração', declaracao_atividades_path(format: "pdf", hora: Time.now.to_i), method: :get, class:"btn btn-default", target: "_tab"%>
+<%= link_to 'Gerar Relatório', relatorio_atividades_path(format: "pdf", hora: Time.now.to_i), method: :get, class:"btn btn-default", target: "_tab"%>
+
 </div>
 
 <script type="text/javascript">

@@ -6,8 +6,8 @@ class RelatorioPdf < Prawn::Document
     @declaracao = declaracao
     @view = view
     header
-    aluno_info
-    line_items
+    solicitante_info
+    tabela_items
     @mes = String.mes(@hora.month)
     footer
   end
@@ -23,7 +23,7 @@ class RelatorioPdf < Prawn::Document
         text "UNIVERSIDADE FEDERAL FLUMINENSE", :align => :center
         move_down 40
         font_size 24
-        text "Relatorio de Atividades", :align => :center, :style => :bold
+        text "Relatório de Atividades", :align => :center, :style => :bold
     end
   end
 
@@ -31,11 +31,11 @@ class RelatorioPdf < Prawn::Document
     bounding_box [bounds.left + 20, bounds.top - 200], :width => (bounds.width - 40) do
       font_size 14
       font "Times-Roman"
-      text "Relatorio solicitado por: #{@declaracao.usuario.nome}"
+      text "Relatório solicitado por: #{@declaracao.usuario.nome}"
     end
   end
 
-  def line_items
+  def tabela_items
     bounding_box [bounds.left + 20, bounds.top - 250], :width => (bounds.width - 40)  do
        font_size 13
        font "Times-Roman"

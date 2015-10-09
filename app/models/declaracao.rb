@@ -1,15 +1,31 @@
 class Declaracao < ActiveRecord::Base
 	belongs_to :usuario
+	has_many :atividades
 
 
 
-	def self.nova_declaracao_aluno(usuario)
+	def self.nova_declaracao(usuario)
+		declaracao = Declaracao.new
+		declaracao.usuario = usuario
+		declaracao.tabela = declaracao.gera_tabela_confirmadas(usuario)
+    	declaracao.iduff = declaracao.usuario.iduff
+    	declaracao.chave = declaracao.gera_chave
+    	declaracao
+	end
+
+	def self.novo_relatorio(usuario)
 		declaracao = Declaracao.new
 		declaracao.usuario = usuario
     	declaracao.tabela = declaracao.gera_tabela(usuario, declaracao)
     	declaracao.iduff = declaracao.usuario.iduff
     	declaracao.chave = declaracao.gera_chave
     	declaracao
+	end
+
+	def gera_tabela_confirmadas(usuario)
+		tabela = [["Nome", "Descrição", "Professor", "Criado em", "Última Atualização", "Status"]]
+		tabela += usuario.atividades.collect{ |a| [a.nome, a.descricao, a.professor.usuario.nome, a.created_at.localtime.strftime("%d-%m-%y"), a.updated_at.localtime.strftime("%d-%m-%y"), a.status]}
+		tabela
 	end
 
 	def gera_tabela(usuario, declaracao)
@@ -20,17 +36,19 @@ class Declaracao < ActiveRecord::Base
 		else
 			tabela = declaracao.gera_tabela_coordenacao(usuario)
 		end
-		
+		tabela
 	end
 
 	def gera_tabela_aluno(usuario)
 		tabela = [["Nome", "Professor", "Criado em", "Última Atualização", "Status"]]
 		tabela += usuario.atividades.collect{ |a| [a.nome, a.professor.usuario.nome, a.created_at.localtime.strftime("%d-%m-%y"), a.updated_at.localtime.strftime("%d-%m-%y"), a.status]}
+		tabela
 	end
 
 	def gera_tabela_professor(usuario)
 		tabela = [["Nome", "Aluno", "Criado em", "Última Atualização", "Status"]]
 		tabela += @usuario.atividades.collect{ |a| [a.nome, a.aluno.usuario.nome, a.created_at.localtime.strftime("%d-%m-%y"), a.updated_at.localtime.strftime("%d-%m-%y"), a.status]}
+		tabela
 	end
 
 	def gera_tabela_coordenacao(usuario)

@@ -34,16 +34,6 @@ end
 
 puts "Criando usuário padrão"
 
-Usuario.transaction do
-  usuario = Usuario.where("iduff = '14735072780'")
-  if usuario.blank?
-    usuario = Usuario.new :nome=>"Larissa",
-    				:iduff => "14735072780",
-    				:email => "larissateixeira@id.uff.br",
-            :categoria => "Aluno"
-    usuario.save!
-  end
-end
 
 Usuario.transaction do
   usuario = Usuario.where("iduff = '1234567901'")

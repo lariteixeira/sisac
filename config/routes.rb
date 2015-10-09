@@ -22,11 +22,11 @@ Rails.application.routes.draw do
     end
   end
 
-  get 'declaracoes' => 'declaracoes#index'
-  get 'validar_declaracao_index' => 'declaracoes#validar_declaracao_index'
-  post 'validar_declaracao' => 'declaracoes#validar_declaracao'
-  get "declaracao_atividades_#{Time.now.to_i}.pdf", to: 'declaracoes#declaracao_atividades', format: 'pdf', as: "declaracao_atividades"
-
+  get 'declaracoes', to: 'declaracoes#validar_declaracao'
+  get 'validar_declaracao_index', to: 'declaracoes#validar_declaracao_index'
+  post 'validar_declaracao', to: 'declaracoes#validar_declaracao'
+  get "declaracao_atividades_:hora.pdf", to: 'declaracoes#declaracao_atividades', format: 'pdf', as: "declaracao_atividades"
+  get "relatorio_atividades_:hora.pdf", to: 'declaracoes#relatorio_atividades', format: 'pdf', as: "relatorio_atividades"
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

@@ -36,13 +36,22 @@ class DeclaracaoPdf < Prawn::Document
   end
 
   def line_items
-    bounding_box [bounds.left + 20, bounds.top - 250], :width => (bounds.width - 40)  do
-         font_size 13
-         font "Times-Roman"
-         data = @declaracao.tabela
-         table (data), :row_colors => ["DDDDDD", "FFFFFF"]
+    bounding_box [bounds.left + 20, bounds.top], :width => (bounds.width - 40)  do
+        move_down 258
+        font_size 13
+        @declaracao.tabela.each_with_index do |atividade, index|
+            text "Nome: #{atividade[0]}"
+            text "Descricao: #{atividade[1]}"
+            text "Professor: #{atividade[2]}"
+            text "Data de Registro: #{atividade[3]}"
+            text "Ultima Atualização: #{atividade[4]}"
+            text "Status: #{atividade[5]}"
+            move_down 10
+            stroke_horizontal_rule
+            move_down 10
+         end
          font_size 35
-         move_down 50
+         move_down 20
          font "Helvetica"
          fill_color(0.2, 0.2, 0.2, 30)
          text "CPF #{@declaracao.usuario.iduff}", :align => :center, :style => :bold

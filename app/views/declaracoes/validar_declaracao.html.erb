@@ -1,16 +1,15 @@
-<h1> Validar Declarações </h1>
+<div class="page-header">
+  <h1> Validar Declarações </h1>
+</div>
 
 <fieldset id="dados_do_aluno">
   <legend>Dados do aluno</legend>
   <div>
     <p><b>Nome:</b>
-      <%= @usuario.nome %></p>
+      <%= @declaracao.usuario.nome %></p>
   </div>
   <div>
-    <p><b>CPF:</b> <%= @usuario.iduff %></p>
-  </div>
-  <div>
-    <p><b>Curso:</b>  <%= @usuario.curso %> </p>
+    <p><b>CPF:</b> <%= @declaracao.usuario.iduff %></p>
   </div>
 </fieldset>
 
@@ -20,14 +19,24 @@
     <p><b>Data de emissão:</b></p>
     <p> <%= @declaracao.created_at.strftime("%d/%m/%Y %H:%M:%S") %></p>
   </div>
-  <div>
-    <p><b>Texto:</b></p>
-    <p><%= @declaracao.texto %></p>
-  </div>
-  <div>
+    <div>
     <p><b>Chave:</b></p>
     <p> <%= @declaracao.chave %></p>
   </div>
+  <hr>
+  <%@declaracao.tabela.each_with_index do |atividade, index| next if index == 0%>
+
+      <p><b>Atividade <%=index%>:</b></p>
+      <p>Nome: <%=atividade[0]%></p>
+      <p>Descricao: <%=atividade[1]%></p>
+      <p>Avaliador: <%=atividade[1]%>
+      <p>Criação: <%=atividade[2]%></p>
+      <p>Ultima Atualizaçao: <%=atividade[3]%></p>
+      <p>Status: <%=atividade[4]%></p>
+    <%end%>
+  <div>
+  </div>
+
 </fieldset>
 
-<%= link_to "Voltar", root_path, :class => 'btn' %>
+<%= link_to "Voltar", root_path, :class => 'btn btn-default' %>
